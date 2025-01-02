@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Header } from "./Header";
-import { PortalPage } from "./PortalPage";
+import { ProfileShowPage } from "./ProfileShowPage";
 import { Footer } from "./Footer";
 import { SignupPage } from "./SignupPage";
 import { LoginPage } from "./LoginPage";
@@ -25,8 +25,9 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/portalpage",
-        element: <PortalPage />,
+        path: "/users/:id",
+        element: <ProfileShowPage />,
+        loader: ({ params }) => axios.get(`/users/${params.id}.json`).then((response) => response.data),
       },
       {
         path: "/signup",
