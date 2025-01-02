@@ -1,7 +1,16 @@
 import { LogoutLink } from "./LogoutLink";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Simulate user authentication status check (you can replace this with actual API or localStorage logic)
+  useEffect(() => {
+    const user = localStorage.getItem("email"); // Assuming user email is stored in localStorage when logged in
+    setIsLoggedIn(!!user);
+  }, []);
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,23 +42,28 @@ export function Header() {
                   Profile
                 </Link>
               </li>
-              {/* Signup Link */}
-              <li className="nav-item">
-                <Link to="/signup" className="nav-link">
-                  Signup
-                </Link>
-              </li>
-              {/* Login Link */}
-              <li className="nav-item">
-                <Link to="/login" className="nav-link">
-                  Login
-                </Link>
-              </li>
+              {/* Show Login and Signup only if the user is not logged in */}
+              {!isLoggedIn && (
+                <>
+                  <li className="nav-item">
+                    <Link to="/signup" className="nav-link">
+                      Signup
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/login" className="nav-link">
+                      Login
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
-            {/* Logout Button/Link (right-aligned) */}
-            <div className="d-flex">
-              <LogoutLink />
-            </div>
+            {/* Show Logout Link only if the user is logged in */}
+            {isLoggedIn && (
+              <div className="d-flex">
+                <LogoutLink />
+              </div>
+            )}
           </div>
         </div>
       </nav>
