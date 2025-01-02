@@ -13,9 +13,18 @@ axios.defaults.withCredentials = true;
 const router = createBrowserRouter([
   {
     element: (
-      <div className="container">
+      <div className="d-flex flex-column min-vh-100">
+        {/* Header */}
         <Header />
-        <Outlet />
+
+        {/* Main Content */}
+        <main className="flex-grow-1">
+          <div className="container py-4">
+            <Outlet />
+          </div>
+        </main>
+
+        {/* Footer */}
         <Footer />
       </div>
     ),
@@ -25,9 +34,9 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/users/:id",
+        path: "/profile",
         element: <ProfileShowPage />,
-        loader: ({ params }) => axios.get(`/users/${params.id}.json`).then((response) => response.data),
+        loader: () => axios.get(`/current_user.json`).then((response) => response.data),
       },
       {
         path: "/signup",

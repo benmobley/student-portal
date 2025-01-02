@@ -1,5 +1,4 @@
 import { ProfileShow } from "./ProfileShow";
-import { ProfileEdit } from "./ProfileEdit";
 import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
@@ -32,8 +31,7 @@ export function ProfileShowPage() {
 
   return (
     <main>
-      <ProfileShow user={user} />
-      <ProfileEdit onUpdate={handleUpdate} />
+      <ProfileShow user={user} onUpdate={handleUpdate} />
     </main>
   );
 }
