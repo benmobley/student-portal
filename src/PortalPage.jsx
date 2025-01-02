@@ -1,7 +1,13 @@
+import { PortalShow } from "./PortalShow";
+
 export function PortalPage() {
+  const handleShow = (profile) => {
+    console.log("handleShow", profile);
+  };
+
   return (
     <main>
-      <h1>Welcome to React!</h1>
+      <PortalShow onShow={handleShow} />
     </main>
   );
 }
