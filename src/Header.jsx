@@ -36,12 +36,14 @@ export function Header() {
           {/* Collapsible Menu */}
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {/* Profile Link */}
-              <li className="nav-item">
-                <Link to="/profile" className="nav-link">
-                  Profile
-                </Link>
-              </li>
+              {/* Show Profile Link only if the user is logged in */}
+              {isLoggedIn && (
+                <li className="nav-item">
+                  <Link to="/profile" className="nav-link">
+                    Profile
+                  </Link>
+                </li>
+              )}
               {/* Show Login and Signup only if the user is not logged in */}
               {!isLoggedIn && (
                 <>
