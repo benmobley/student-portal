@@ -23,12 +23,11 @@ export function ProfileShow({ user, onUpdate }) {
   const handleModalSubmit = (event) => {
     event.preventDefault();
 
-    // Only update the single field that’s changed
     const params = {
       [fieldToEdit]: fieldValue,
     };
 
-    onUpdate(user, params); // Call parent's update function
+    onUpdate(user, params);
     handleModalClose();
   };
 
@@ -73,116 +72,104 @@ export function ProfileShow({ user, onUpdate }) {
                   </button>
                 </p>
               )}
-
-              <ul className="list-group list-group-flush mt-3">
-                {/* Email */}
-                {user.email && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Email:</strong> {user.email}
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("email", user.email)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-
-                {/* LinkedIn */}
-                {user.linkedin_url && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>LinkedIn: </strong>
-                      <a href={user.linkedin_url} target="_blank" rel="noopener noreferrer">
-                        {user.linkedin_url}
-                      </a>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("linkedin_url", user.linkedin_url)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-
-                {/* Twitter */}
-                {user.twitter_handle && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Twitter: </strong>
-                      <a href={`https://twitter.com/${user.twitter_handle}`} target="_blank" rel="noopener noreferrer">
-                        @{user.twitter_handle}
-                      </a>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("twitter_handle", user.twitter_handle)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-
-                {/* Website */}
-                {user.website_url && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Website: </strong>
-                      <a href={user.website_url} target="_blank" rel="noopener noreferrer">
-                        {user.website_url}
-                      </a>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("website_url", user.website_url)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-
-                {/* Resume */}
-                {user.online_resume_url && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Resume: </strong>
-                      <a href={user.online_resume_url} target="_blank" rel="noopener noreferrer">
-                        {user.online_resume_url}
-                      </a>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("online_resume_url", user.online_resume_url)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-
-                {/* GitHub */}
-                {user.github_url && (
-                  <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>GitHub: </strong>
-                      <a href={user.github_url} target="_blank" rel="noopener noreferrer">
-                        {user.github_url}
-                      </a>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => handleModalOpen("github_url", user.github_url)}
-                    >
-                      Edit
-                    </button>
-                  </li>
-                )}
-              </ul>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Dynamic Sections */}
+      {[
+        { title: "Experiences", data: user.experiences },
+        { title: "Educations", data: user.educations },
+        { title: "Skills", data: user.skills },
+        { title: "Projects", data: user.projects },
+      ].map(
+        (section) =>
+          section.data.length > 0 && (
+            <div key={section.title} className="card mb-3 shadow-sm">
+              <div className="card-header">
+                <h5 className="mb-0">{section.title}</h5>
+              </div>
+              <ul className="list-group list-group-flush">
+                {section.data.map((item, index) => (
+                  <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    <div>{item}</div>
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={() => handleModalOpen(section.title.toLowerCase(), item)}
+                    >
+                      Edit
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+      )}
+
+      {/* Other Information */}
+      <div className="card mb-3 shadow-sm">
+        <div className="card-header">
+          <h5 className="mb-0">Contact Information</h5>
+        </div>
+        <ul className="list-group list-group-flush">
+          {[
+            { label: "Email", value: user.email, field: "email" },
+            {
+              label: "LinkedIn",
+              value: user.linkedin_url,
+              field: "linkedin_url",
+              isLink: true,
+            },
+            {
+              label: "Twitter",
+              value: user.twitter_handle,
+              field: "twitter_handle",
+              isLink: true,
+              prefix: "https://twitter.com/",
+            },
+            {
+              label: "Website",
+              value: user.website_url,
+              field: "website_url",
+              isLink: true,
+            },
+            {
+              label: "Resume",
+              value: user.online_resume_url,
+              field: "online_resume_url",
+              isLink: true,
+            },
+            {
+              label: "GitHub",
+              value: user.github_url,
+              field: "github_url",
+              isLink: true,
+            },
+          ].map(
+            (info, index) =>
+              info.value && (
+                <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{info.label}:</strong>{" "}
+                    {info.isLink ? (
+                      <a href={`${info.prefix || ""}${info.value}`} target="_blank" rel="noopener noreferrer">
+                        {info.value}
+                      </a>
+                    ) : (
+                      info.value
+                    )}
+                  </div>
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={() => handleModalOpen(info.field, info.value)}
+                  >
+                    Edit
+                  </button>
+                </li>
+              )
+          )}
+        </ul>
       </div>
 
       {/* ==================

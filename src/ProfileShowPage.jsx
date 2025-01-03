@@ -15,17 +15,17 @@ export function ProfileShowPage() {
   //   online_resume_url: "online_resume_url",
   //   github_url: "github_url",
   //   photo: "example.jpg",
-  //   experiences: [],
-  //   educations: [],
-  //   skills: [],
-  //   projects: [],
+  //   experiences: ["first experience", "second experience"],
+  //   educations: ["Purdue University", "Actualize Bootcamp"],
+  //   skills: ["first skill", "second skill"],
+  //   projects: ["First Project", "Second project"],
   // };
   const navigate = useNavigate();
 
   const handleUpdate = (profile, params) => {
     console.log("handleUpdate", profile);
     axios.patch(`/users/${user.id}.json`, params).then(() => {
-      navigate(`/users/${user.id}`);
+      navigate(`/profile`);
     });
   };
 
