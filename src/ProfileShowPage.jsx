@@ -4,6 +4,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 
 export function ProfileShowPage() {
   const user = useLoaderData();
+  console.log(user);
   // const user = {
   //   first_name: "Ben",
   //   last_name: "Mobley",
@@ -18,7 +19,7 @@ export function ProfileShowPage() {
   //   experiences: ["first experience", "second experience"],
   //   educations: ["Purdue University", "Actualize Bootcamp"],
   //   skills: ["first skill", "second skill"],
-  //   projects: ["First Project", "Second project"],
+  //   projects: ["First Project", "Second project", "Third Project"],
   // };
   const navigate = useNavigate();
 
